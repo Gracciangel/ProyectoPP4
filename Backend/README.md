@@ -43,13 +43,16 @@ Este proyecto de Backend utiliza **Express** como framework de Node.js para gest
 - **dotenv** v16.5.0  
   Para el uso de variables de entorno, permitiendo la configuración flexible y segura del proyecto.
 
+- **nodemon** v3.1.10
+  Para detectar cambios en tiempo real sin necesidad de inicializar el servidor nuevamente.
 ---
 
 ## Instalación
 
 
 1. Clona el repositorio:
-
+2. npm install (para instalar todas las dependencias)
+3. npm run dev (para inicializar el servidor)
 
 ```bash
 git clone https://github.com/Gracciangel/ProyectoPP4

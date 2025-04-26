@@ -7,13 +7,26 @@
 - [Tecnología](#tecnología)
 - [Instalación](#instalación)
 - [Variables de Entorno](#variables-de-entorno)
-- [Estructura del Proyecto](#estructura-del-proyecto)
 - [Rutas](#Rutas)
 
 
 ---
 
 ## Introducción
+
+### Estructura del Proyecto
+
+
+/backend
+  ├── /src
+  │    ├── /Controllers
+  │    ├── /Models
+  │    ├── /Routes
+  │    └── /Database
+  ├── .env
+  ├── package.json
+  ├── tsconfig.json
+  └── README.md
 
 Este proyecto de Backend utiliza **Express** como framework de Node.js para gestionar las conexiones entre el frontend y la base de datos.
 
@@ -41,16 +54,3 @@ Este proyecto de Backend utiliza **Express** como framework de Node.js para gest
 ```bash
 git clone https://github.com/Gracciangel/ProyectoPP4
 
-## Estructura del Proyecto
-
-
-/backend
-  ├── /src
-  │    ├── /Controllers
-  │    ├── /Models
-  │    ├── /Routes
-  │    └── /Database
-  ├── .env
-  ├── package.json
-  ├── tsconfig.json
-  └── README.md

@@ -126,7 +126,7 @@ export const SesionInit = async (email: string, password: string) => {
       });
       return userData;
     } else {
-      return new ResponseDto(false, 'Error al iniciar sesión', verifyEmail.message || verifyPass.message, null);
+      return new ResponseDto(false, 'Error al iniciar sesión', verifyEmail.exist ? verifyPass.message: verifyEmail.message, null);
     }
   } catch (error) {
     console.log(error);

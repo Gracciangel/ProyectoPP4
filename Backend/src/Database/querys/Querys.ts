@@ -3,7 +3,8 @@ export const UsersSQL = {
         ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
         name TEXT NOT NULL, 
         password TEXT NOT NULL,
-        email TEXT NOT NULL UNIQUE,  -- Corrige la doble declaración NOT NULL
+        email TEXT NOT NULL UNIQUE,  
+        photoUrl TEXT ,
         rol TEXT NOT NULL
     );`,
 

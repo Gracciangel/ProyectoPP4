@@ -1,7 +1,9 @@
 import { UsersSQL } from "../querys/Querys";
 import { Users } from "../../Models/Users";
 import { SQL } from "../Context";
-import { CreateUserResponse, EmailResponse, TableResponse } from "../Types/Types";
+import { CreateUserResponse, emailRegex, EmailResponse, TableResponse } from "../Types/Types";
+import { ResponseDto } from "../../Models/ResponseDto";
+import { VerifyByEmail, VerifyByPassword } from "../../Helper/VerificarDatauser";
 
 
 
@@ -104,4 +106,30 @@ export const CreateUsers = async ({
   });
 
   return insertResp;
+};
+
+
+export const SesionInit = async (email: string, password: string) => {
+  try {
+    const verifyEmail = await VerifyByEmail(email);
+    const verifyPass = await VerifyByPassword(password); 
+
+    if (verifyEmail.exist && verifyPass.succes) {
+      const userData = await new Promise<ResponseDto>((resolve, _reject) => {
+        SQL.get(UsersSQL.sesionInit,  (err, row: Users | undefined) => {
+          if (err || !row) {
+            resolve(new ResponseDto(false, 'Credenciales inválidas', err?.message ?? null, null));
+          } else {
+            resolve(new ResponseDto(true, `Te damos la bienvenida ${row.name}`, null, [row]));
+          }
+        });
+      });
+      return userData;
+    } else {
+      return new ResponseDto(false, 'Error al iniciar sesión', verifyEmail.message || verifyPass.message, null);
+    }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };

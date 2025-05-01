@@ -1,5 +1,5 @@
 import { Request, response, Response, Router } from "express";
-import { CreateUsers } from "../Database/DAL/User";
+import { CreateUsers, SesionInit } from "../Database/DAL/User";
 import { GetBooks } from "../Helper/ApiBook";
 const routes = Router() ; 
 
@@ -27,7 +27,21 @@ const GetBooksController = async (_req: Request, res: Response) => {
     }
 };
 
+const SesionInitController = async (req:Request , res:Response) => {
+    try {
+        const response = await SesionInit(req.body['email'], req.body['password']);
+        res.status(200).json(response) ;
+    } catch (err) {
+        res.status(500).json({
+            error: err ,
+            msj: "error en el servidor"
+        })
+    }
+}
+
 
 routes.post('/registerUser', CreteUserController) ;
-routes.get('/books', GetBooksController)
+routes.get('/books', GetBooksController) ;
+routes.get('/initSesion', SesionInitController)
+
 export default routes ;

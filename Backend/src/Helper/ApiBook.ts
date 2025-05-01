@@ -1,18 +1,18 @@
-const urlBook = 'https://gutendex.com/books/?page=1&page_size=';
+const urlBook = 'https://gutendex.com/books/?page=1&page_size=100';
 
-console.log(urlBook)    
-export const GetBooks = async (pages: string) => {
+
+export const GetBooks = async () => {
     try{
 
-        const request = await fetch(urlBook+pages,{
+        const request = await fetch(urlBook,{
             method:'GET'
 
         })
         const response = await request.json() ; 
         
-        console.log(`se obtubieron ${response.results.length} libros`)
-        console.log(response.results[20])
-
+        
+        console.log(response)
+        return response
     }catch(error){
         console.log(error  + "error al obtener los libros")
     }

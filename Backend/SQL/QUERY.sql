@@ -1,0 +1,21 @@
+-- EJECUTAR EN LA BASE DE DATOS 
+-- LA BASE DE DATOS DEBE SER CREADA DENTRO DE LA CARPETA src 
+
+
+CREATE TABLE IF NOT EXISTS users (
+            ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+            rol_id INTEGER NOT NULL, 
+            name TEXT NOT NULL, 
+            password TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,  
+            photoUrl TEXT,
+            FOREIGN KEY (rol_id) REFERENCES types_roles(ID)
+);
+
+CREATE TABLE IF NOT EXISTS types_roles (
+            ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            DESCRIPCION TEXT NOT NULL
+);
+
+INSERT INTO types_roles (DESCRIPCION) VALUES ('admin');
+INSERT INTO types_roles (DESCRIPCION) VALUES ('user') ;

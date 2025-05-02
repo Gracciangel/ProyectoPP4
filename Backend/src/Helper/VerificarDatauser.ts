@@ -1,5 +1,5 @@
 import { SQL } from "../Database/Context";
-import { UsersSQL } from "../Database/querys/Querys";
+import { UsersSQL } from "../Database/Query/Querys";
 import { emailRegex, EmailResponse, PasswordResponse } from "../Database/Types/Types"
 
 

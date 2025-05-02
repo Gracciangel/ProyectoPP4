@@ -3,13 +3,13 @@ export class Users {
     name: string;
     email: string;
     password: string;
-    rol: 'admin' | 'user';      
+    rol_id: 1 | 2 ;      
 
-    constructor(id: number, nombre: string, email: string, password: string, rol: 'admin' | 'user') {
+    constructor(id: number, nombre: string, email: string, password: string, rol: 1|2) {
         this.id = id;
         this.name = nombre;
         this.email = email;
         this.password = password;
-        this.rol = rol;
+        this.rol_id = rol;
     }
 }

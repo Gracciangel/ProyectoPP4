@@ -1,25 +1,14 @@
-import { UsersSQL } from "../querys/Querys";
+import { UsersSQL } from "../Query/Querys";
 import { Users } from "../../Models/Users";
 import { SQL } from "../Context";
 import { CreateUserResponse, emailRegex, EmailResponse, TableResponse } from "../Types/Types";
 import { ResponseDto } from "../../Models/ResponseDto";
 import { VerifyByEmail, VerifyByPassword } from "../../Helper/VerificarDatauser";
+import { promisify } from 'util';
 
+// Define getAsync as a promisified version of SQL.get
+const getAsync = promisify(SQL.get.bind(SQL));
 
-
-
-const CreateTableNotExist = async (): Promise<TableResponse> => {
-  return new Promise(resolve => {
-    SQL.run(UsersSQL.createTable, (err: Error | null) => {
-      if (err) {
-        console.error('Error al crear la tabla usuarios:', err.message);
-        resolve({ success: false, message: `Error al crear la tabla usuarios: ${err.message}` });
-      } else {
-        resolve({ success: true, message: 'Tabla de usuarios verificada/creada correctamente' });
-      }
-    });
-  });
-};
 
 
 export const verifyEmailExist = async (email: string): Promise<EmailResponse> => {
@@ -62,17 +51,9 @@ export const CreateUsers = async ({
   name,
   password,
   email,
-  rol
+  rol_id
 }: Users): Promise<CreateUserResponse> => {
   
-  const tableResp = await CreateTableNotExist();
-  if (!tableResp.success) {
-    
-    return {
-      success: false,
-      message: tableResp.message
-    };
-  }
 
   // 2) Verificar email
   const emailResp = await verifyEmailExist(email);
@@ -88,7 +69,7 @@ export const CreateUsers = async ({
   const insertResp: CreateUserResponse = await new Promise(resolve => {
     SQL.run(
       UsersSQL.insert,
-      [name, password, email, rol],
+      [name, password, email, rol_id],
       (err: Error | null) => {
         if (err) {
           console.error('Error al crear el usuario:', err.message);
@@ -96,11 +77,13 @@ export const CreateUsers = async ({
             success: false,
             message: `Error al crear el usuario: ${err.message}`
           });
+        }else{
+          resolve({
+            success: true,
+            message: `El usuario ${name} fue agregado exitosamente`
+          });
+
         }
-        resolve({
-          success: true,
-          message: `El usuario ${name} fue agregado exitosamente`
-        });
       }
     );
   });
@@ -133,3 +116,7 @@ export const SesionInit = async (email: string, password: string) => {
     throw error;
   }
 };
+function runAsync(createTypesRoles: string) {
+  throw new Error("Function not implemented.");
+}
+

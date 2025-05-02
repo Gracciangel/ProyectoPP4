@@ -1,14 +1,23 @@
 import { Request, response, Response, Router } from "express";
 import { CreateUsers, SesionInit } from "../Database/DAL/User";
 import { GetBooks } from "../Helper/ApiBook";
+import { ResponseDto } from "../Models/ResponseDto";
 const routes = Router() ; 
 
 const CreteUserController = async (req: Request , res:Response) => {
     try {
         const InsertUser = await CreateUsers(req.body) ; 
-        res.status(200).json({
-            message:`${req.body['name']} agregado exitosamente` 
-        })
+        if(InsertUser.success ){
+            res.status(200).json({
+                result: new ResponseDto(false, `${req.body['name']} agregado correctamente`, InsertUser.message , [req.body])
+            })
+        }else{
+            res.status(200).json({
+                
+                result: new ResponseDto(false, `${req.body['name']} no pudo ser agregado`, InsertUser.message, null)
+            })
+        }
+
     } catch (error) {
         console.log(`error en el servidor ${error}`);
         res.status(500).json({

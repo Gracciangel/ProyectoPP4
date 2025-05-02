@@ -1,6 +1,4 @@
 export const UsersSQL = {
-
-
   verifyByEmail: `SELECT * FROM USERS WHERE email = ?;`,
 
   verifByPassword: `SELECT * FROM USERS WHERE password = ?;`,

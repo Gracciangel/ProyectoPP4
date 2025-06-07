@@ -1,0 +1,148 @@
+/* botones */
+.successlg{
+    background-color: #45B5A5;
+    border: none;
+    width: 668px;
+    height: 54px;
+    border-radius: 16px;
+    font-size: 32px;
+    color: azure;
+}
+.successmd{
+    background-color: #45B5A5;
+    border: none;
+    width: 312px;
+    height: 54px;
+    border-radius: 16px;
+    font-size: 24px;
+    color: azure;
+}
+.successsm{
+    background-color: #45B5A5;
+    border: none;
+    width: 124px;
+    height: 54px;
+    border-radius: 16px;
+    font-size: 20px;
+    color: azure;
+}
+
+.errorlg{
+    background-color: #9D3D3F;
+    border: none;
+    width: 668px;
+    height: 54px;
+    border-radius: 16px;
+    font-size: 20px;
+    color: azure;
+}
+.errormd{
+    background-color: #9D3D3F;
+    border: none;
+    width: 312px;
+    height: 54px;
+    border-radius: 16px;
+    font-size: 20px;
+    color: azure;
+}
+.errorsm{
+    background-color: #9D3D3F;
+    border: none;
+    width: 124px;
+    height: 54px;
+    border-radius: 16px;
+    font-size: 20px;
+    color: azure;
+}
+
+/* inputs */
+.input_lg{
+    background: transparent;
+    width: 668px;
+    height: 54px;
+    border: none;
+    border-bottom: 1px solid grey;
+    text-align: center;
+    color: black;
+    font-size: 32px;
+}
+.input_focus_lg{
+    background: transparent;
+    width: 668px;
+    height: 54px;
+    border: none;
+    border-bottom: 1px solid grey;
+    text-align: center;
+    color: black;
+    font-size: 32px;
+    transition: .5s;
+    &:focus{
+        background: rgb(75, 75, 153);
+        border: none;
+        color: white;
+    &::placeholder{
+        color: rgb(238, 7, 7);
+    }
+    }
+}
+.input_md{
+    background: transparent;
+    width: 312px;
+    height: 54px;
+    border: none;
+    border-bottom: 1px solid grey;
+    text-align: center;
+    color: black;
+    font-size: 16px;
+}
+.input_focus_md{
+    background: transparent;
+    width: 312px;
+    height: 54px;
+    border: none;
+    border-bottom: 1px solid grey;
+    text-align: center;
+    color: black;
+    font-size: 16px;
+    transition: .5s;
+    &:focus{
+        background: rgb(75, 75, 153);
+        border: none;
+        color: white;
+    &::placeholder{
+        color: rgb(238, 7, 7);
+        font-size: 16px;
+    }
+    }
+}
+
+.input_sm{
+    background: transparent;
+    width: 124px;
+    height: 54px;
+    border: none;
+    border-bottom: 1px solid grey;
+    text-align: center;
+    color: black;
+    font-size: 16px;
+}
+.input_focus_sm{
+    background: transparent;
+    width: 124px;
+    height: 54px;
+    border: none;
+    border-bottom: 1px solid grey;
+    text-align: center;
+    color: black;
+    font-size: 16px;
+    transition: .5s;
+    &:focus{
+        background: rgb(75, 75, 153);
+        border: none;
+        color: white;
+    &::placeholder{
+        font-size: 16px;
+        color: rgb(238, 7, 7);
+    }
+    }
+}

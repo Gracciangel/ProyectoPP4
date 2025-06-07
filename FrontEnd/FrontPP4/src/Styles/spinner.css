@@ -1,0 +1,23 @@
+.spinner_lg {
+    width: 243px;
+    height: 243px;
+    position: absolute;
+    border-radius: 50%;
+    border: 6px solid;
+    border-color: transparent;
+    border-top-color: #86E3A3;
+    border-right-color: #A5CFAF;
+    border-bottom-color: #D396D5;
+    border-left-color: #86E3A3;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  

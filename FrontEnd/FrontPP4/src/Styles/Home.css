@@ -1,0 +1,14 @@
+.home{
+    padding: 5px 15px;
+}
+.home .imgHomeBook{
+    width: 300px;
+}
+.contentMint{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+}
+.ContentTitleMint{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+}

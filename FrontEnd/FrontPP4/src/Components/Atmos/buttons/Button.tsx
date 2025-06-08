@@ -1,6 +1,6 @@
 
 import type { IButtons } from '../../../Interfaces/buttons/IButtons'
-import '../../Styles/Components.css' ;
+import '../../../Styles/Components.css' ;
 
 export const Button = ({type, action, label, size}: IButtons) => {
   return (

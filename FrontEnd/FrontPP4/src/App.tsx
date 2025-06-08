@@ -1,13 +1,18 @@
-import { Login } from "./pages/Login"
+import { ContentHome } from "./Components/Molecules/ContentHome"
+import { NavBar } from "./Components/Navbar/NavBar"
+
 
 
 function App() {
   
 
   return (
-    <>
-  <Login type='desk'/>
-    </>
+    <div>
+      
+      <NavBar/>
+     
+      <ContentHome/>
+    </div>
   )
 }
 

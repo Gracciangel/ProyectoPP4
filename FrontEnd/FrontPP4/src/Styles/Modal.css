@@ -1,0 +1,60 @@
+/* cubre toda la pantalla con fondo semitransparente y blur */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* caja modal centrada, tamaño responsivo */
+.containerModal {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+.containerModal h1{
+  text-align: center;
+  font-family: sans-serif;
+}
+.containerModal p{
+  text-align: center;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size: 15px;
+}
+/* botones en línea, centrados, con espacio y padding moderado */
+.modalButtons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.modalButtons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Ejemplo de variantes */
+.modalButtons .confirm {
+  background-color: #4a90e2;
+  color: #fff;
+}
+
+.modalButtons .cancel {
+  background-color: #e0e0e0;
+  color: #333;
+}

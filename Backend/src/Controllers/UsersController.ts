@@ -50,8 +50,8 @@ const SesionInitController = async (req:Request , res:Response) => {
 }
 
 
+routes.post('/initSesion', SesionInitController)
 routes.post('/registerUser', CreteUserController) ;
 routes.get('/books', GetBooksController) ;
-routes.get('/initSesion', SesionInitController)
 
 export default routes ;

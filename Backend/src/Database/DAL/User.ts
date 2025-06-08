@@ -109,7 +109,14 @@ export const SesionInit = async (email: string, password: string) => {
       });
       return userData;
     } else {
-      return new ResponseDto(false, 'Error al iniciar sesión', verifyEmail.message || verifyPass.message, null);
+      if(!verifyEmail.exist){
+        return new ResponseDto(false, 'Error al iniciar sesión', `El email ${email} no está registrado`, null);
+        
+      }
+      else if(!verifyPass.succes){
+
+        return new ResponseDto(false, 'Error al iniciar sesión', `la constraseña proporcionada es inválda`, null);
+      }
     }
   } catch (error) {
     console.log(error);

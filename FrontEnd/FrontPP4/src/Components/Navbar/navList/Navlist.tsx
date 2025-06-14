@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import '../../../Styles/NavBar.css' ;
 
 import logo from '../../../assets/candado.svg' ;
@@ -23,18 +24,13 @@ export const navlist :INavList[]= [
         
     },
     {
-        label: 'Perfil' ,
-        path: '/profile',
-        
-    },
-    {
         label:'Contacto',
         path:'/contact',
      
     },
     {
         label: 'Login',
-        path: '/login',
+        path: '/profile',
         icon:{
             isIcon: true ,
             pathIcon: login
@@ -44,6 +40,7 @@ export const navlist :INavList[]= [
 
 
 export const Navlist = () => {
+    const navigate = useNavigate() ; 
   return (
     
  <>
@@ -55,14 +52,14 @@ export const Navlist = () => {
                         {
                             n.icon?.isIcon ? 
                             (<a 
-                            onClick={()=>  console.log('redirigiendo al path '+n.path)}>
+                            onClick={()=> navigate(n.path)}>
                                 <img src={n.icon.pathIcon} alt="icono de inicio de sesion" className='imgNavlist'/>
                             </a>)
                             : 
                             (
                                 <li
                                 onClick={()=>{
-                                    console.log('redirigiendo al path '+n.path)
+                                    navigate(n.path)
                                 }}
                                 >{n.label}</li>
                             )

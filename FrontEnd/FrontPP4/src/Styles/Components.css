@@ -16,6 +16,9 @@
     border-radius: 16px;
     font-size: 24px;
     color: azure;
+    &:hover{
+        cursor: pointer;
+    }
 }
 .successsm{
     background-color: #45B5A5;

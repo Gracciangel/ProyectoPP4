@@ -1,4 +1,4 @@
-import { ContentHome } from "./Components/Molecules/ContentHome"
+import { Outlet } from "react-router-dom"
 import { NavBar } from "./Components/Navbar/NavBar"
 
 
@@ -10,8 +10,7 @@ function App() {
     <div>
       
       <NavBar/>
-     
-      <ContentHome/>
+      <Outlet/> 
     </div>
   )
 }

@@ -10,8 +10,6 @@ export const GetBooks = async () => {
         })
         const response = await request.json() ; 
         
-        
-        console.log(response)
         return response
     }catch(error){
         console.log(error  + "error al obtener los libros")

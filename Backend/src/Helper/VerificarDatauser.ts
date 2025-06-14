@@ -6,8 +6,8 @@ import { emailRegex, EmailResponse, PasswordResponse } from "../Database/Types/T
 //verificar el email 
 export const VerifyByEmail = async (email: string): Promise<EmailResponse> => {
     try {
-      const regexEmail = emailRegex.test(email); 
-      if (regexEmail) {
+    
+    
         const resultEmail = await new Promise<EmailResponse>((resolve, reject) => {
           SQL.get(UsersSQL.verifyByEmail, [email], (err, row) => {
             if (err || !row) {
@@ -24,12 +24,7 @@ export const VerifyByEmail = async (email: string): Promise<EmailResponse> => {
           });
         });
         return resultEmail; 
-      } else {
-        return {
-          exist: false,
-          message: `El email ${email} no cumple con los requerimientos`
-        };
-      }
+    
     } catch (error) {
       console.log(error);
       return {

@@ -20,3 +20,4 @@ export type CreateUserResponse = {
 
 //regular expression 
 export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const pwdRegex = /^(?=.*[0-9])(?=.*[A-Z]).{8,}$/;

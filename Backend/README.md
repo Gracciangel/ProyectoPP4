@@ -45,6 +45,9 @@ Este proyecto de Backend utiliza **Express** como framework de Node.js para gest
 
 - **nodemon** v3.1.10
   Para detectar cambios en tiempo real sin necesidad de inicializar el servidor nuevamente.
+
+- **bcrypt"** v6.0.0
+  Para hashear la contraseña del usuario y no guardar su password en formato de texto plano.
 ---
 
 ## Instalación

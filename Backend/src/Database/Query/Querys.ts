@@ -10,5 +10,7 @@ export const UsersSQL = {
   deleteUserByEmail: `DELETE FROM USERS WHERE email = ?;`,
 
   sesionInit: `SELECT name, email, photoUrl, rol_id as rol FROM users ;`,
+
+  selectPwdToHash: `SELECT password FROM USERS WHERE email = ? ; ` 
 };
 

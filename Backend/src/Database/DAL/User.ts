@@ -1,10 +1,11 @@
 import { UsersSQL } from "../Query/Querys";
 import { Users } from "../../Models/Users";
 import { SQL } from "../Context";
-import { CreateUserResponse, emailRegex, EmailResponse, TableResponse } from "../Types/Types";
+import { CreateUserResponse, emailRegex, EmailResponse, pwdRegex, TableResponse } from "../Types/Types";
 import { ResponseDto } from "../../Models/ResponseDto";
 import { VerifyByEmail, VerifyByPassword } from "../../Helper/VerificarDatauser";
 import { promisify } from 'util';
+import { hashCompare, hashPassword } from "../../Helper/Hashing/Bcrypt";
 
 // Define getAsync as a promisified version of SQL.get
 const getAsync = promisify(SQL.get.bind(SQL));
@@ -52,26 +53,49 @@ export const CreateUsers = async ({
   password,
   email,
   rol_id
-}: Users): Promise<CreateUserResponse> => {
+}: Users): Promise<CreateUserResponse> => {1
   
+  //controles del formulario de registro
+if(!name || name === ''){
+  return{
+    success: false, 
+    message: 'Es necesario ingresar un nombre de usuario'
+  }
+}
+if(!emailRegex.test(email)){
+  return {
+    success: false,
+    message:`el email ${email} no cumple con los requerimientos permitidos. Por favor revisa que esté escrito correctamente.`
+  }
+}
 
-  // 2) Verificar email
   const emailResp = await verifyEmailExist(email);
   if (emailResp.exist) {
     
     return {
-      success: false,
+      success: false, 
       message: emailResp.message
     };
   }
+//controles de la contraseña 
+if(!pwdRegex.test(password)){
+  return {
+    success: false, 
+    message: 'La contraseña debe contener al menos 8 caracteres una mayúscula y un número, por vafor inténtalo nuevamente'
+  }
+}
 
   // 3) Insertar usuario
+  //hasheo de password 
+  const pwdHash = await hashPassword(password) ;
   const insertResp: CreateUserResponse = await new Promise(resolve => {
+
     SQL.run(
       UsersSQL.insert,
-      [name, password, email, rol_id],
+      [name, pwdHash, email, rol_id],
       (err: Error | null) => {
         if (err) {
+          
           console.error('Error al crear el usuario:', err.message);
           return resolve({
             success: false,
@@ -95,9 +119,9 @@ export const CreateUsers = async ({
 export const SesionInit = async (email: string, password: string) => {
   try {
     const verifyEmail = await VerifyByEmail(email);
-    const verifyPass = await VerifyByPassword(password); 
+    const verifyPass = await hashCompare(email , password) ;  
 
-    if (verifyEmail.exist && verifyPass.succes) {
+    if (verifyEmail.exist && verifyPass) {
       const userData = await new Promise<ResponseDto>((resolve, _reject) => {
         SQL.get(UsersSQL.sesionInit,  (err, row: Users | undefined) => {
           if (err || !row) {
@@ -113,7 +137,7 @@ export const SesionInit = async (email: string, password: string) => {
         return new ResponseDto(false, 'Error al iniciar sesión', `El email ${email} no está registrado`, null);
         
       }
-      else if(!verifyPass.succes){
+      else if(!verifyPass){
 
         return new ResponseDto(false, 'Error al iniciar sesión', `la constraseña proporcionada es inválda`, null);
       }

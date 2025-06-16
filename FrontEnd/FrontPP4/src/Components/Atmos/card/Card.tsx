@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import '../../../Styles/Card.css';
 import { Modal } from '../../Molecules/Modal';
+import { FaDownload } from 'react-icons/fa';
+import { ButtonCustom } from '../buttons/Button';
 
 interface ICardProps {
   title: string;
@@ -19,9 +21,15 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
   };
 
   const handleDownloadClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    // sólo abre el modal
-    setModalOpen(true);
+    const user = localStorage.getItem('user'); 
+    if(user){
+      e.stopPropagation();
+      // sólo abre el modal
+      setModalOpen(true);
+
+    }else{
+      alert('tenes que estar autenticado para descargar el recurso.')
+    }
   };
 
   const handleAccept = () => {
@@ -68,12 +76,9 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
                 <li key={i}>{lang}</li>
               ))}
             </ul>
-            <button
-              className="book-download"
-              onClick={handleDownloadClick}
-            >
-              Descargar
-            </button>
+              <ButtonCustom label='Descargar' action={ handleDownloadClick} styleButton={<FaDownload/>} size='md' type='success'
+              
+              />
           </div>
         </div>
       </div>

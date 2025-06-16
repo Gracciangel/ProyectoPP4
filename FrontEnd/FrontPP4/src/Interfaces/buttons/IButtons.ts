@@ -1,6 +1,13 @@
+import type { ReactNode } from "react";
+
 export interface IButtons{
     type: 'error' | 'success' ; 
-    action: () => void; 
+    action: (() => void) | ((e: React.MouseEvent) => void); 
     label:string ;
-    size:'md'|'lg'|'sm'
+    styleButton?:ReactNode;
+    size:'md'|'lg'|'sm';
+    load?:{
+        loading:boolean 
+        isLoad: boolean
+    }
 }

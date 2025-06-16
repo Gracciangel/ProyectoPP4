@@ -1,36 +1,39 @@
-
+import { LuEye, LuEyeOff } from 'react-icons/lu';
+import type { IInputs } from '../../../Interfaces/inputs/IInputs';
+import '../../../Styles/Login.css';
+import { Input, InputGroup } from '@chakra-ui/react';
 import { useState } from 'react';
-import type { IInputs } from '../../../Interfaces/inputs/IInputs' ;
-import '../../../Styles/Login.css' ; 
-import notShow from '../../../assets/ojo-oculto.png'; 
-import show from '../../../assets/ojo.png'; 
 
-export const Inputs = ({type , placeholder, onChange: retunrValue, typeSize, focus, required, showText}: IInputs) => {
+export const Inputs = ({ type, placeholder, onChange: returnValue, required, image }: IInputs) => {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const [overrideType, setOverrideType] = useState<IInputs['type']>(type); 
-  
-  const changeTypeProperty  = () =>{
-     setOverrideType((prev) => (prev === 'password' ? 'text' : 'password'));
-  }
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
-   <div>
-     <input type={showText ? overrideType : type }  placeholder={placeholder} className={`${focus ? 'input_focus_' + typeSize : 'input_' + typeSize}`} 
-    onChange={retunrValue } required={required}/>
-    {
-      showText && (
-        <img src={
-          overrideType === 'password' ? 
-          notShow :
-          show 
-        } 
-        style={{
-          cursor:'pointer',
-          width:'20px'
-        }}
-        onClick={changeTypeProperty}
-        alt="" />
-      )
-    }
-   </div>
-  )
-}
+    <div>
+      <InputGroup 
+        startElement={image} 
+        endElement={
+          type === 'password' ? (
+            <div 
+              onClick={togglePasswordVisibility}
+              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+            >
+              {showPassword ? <LuEyeOff /> : <LuEye />}
+            </div>
+          ) : null
+        }
+      >
+        <Input 
+        width={'240px'}
+          placeholder={placeholder} 
+          onChange={returnValue} 
+          required={required} 
+          type={type === 'password' && !showPassword ? 'password' : 'text'}
+        />
+      </InputGroup>
+    </div>
+  );
+};

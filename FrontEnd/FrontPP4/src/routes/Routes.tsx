@@ -5,6 +5,7 @@ import { ContentHome } from '../Components/Molecules/ContentHome';
 import { Auth } from '../pages/Login';
 import App from '../App';
 import { Register } from '../pages/Register';
+import { Perfil } from '../pages/Perfil';
 
 export const AppRoutes = () => (
   <BrowserRouter>
@@ -13,6 +14,7 @@ export const AppRoutes = () => (
         <Route index element={<ContentHome />} />
         <Route path='/register' element={<Register/>} />
         <Route path="login" element={<Auth />} />
+        <Route path="perfil" element={<Perfil />} />
         <Route path="profile" element={<Navigate to="/login" replace />} />
       </Route>
       <Route path="*" element={<p>Página no encontrada</p>} />

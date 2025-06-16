@@ -14,6 +14,7 @@ export const authUser = async (regsiter: boolean, user?: IUser, registerValue?:I
             },
             body: regsiter ? userRegister : userLogin
         })
+        
         return await response.json(); 
 
     } catch (error) {

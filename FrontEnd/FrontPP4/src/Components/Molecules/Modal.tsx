@@ -1,4 +1,4 @@
-import { Button } from "../Atmos/buttons/Button"
+import { ButtonCustom } from "../Atmos/buttons/Button"
 import '../../Styles/Modal.css';
 interface IModalProps{
     title: string
@@ -21,8 +21,8 @@ export const Modal = ({title, msj, icon, close, acept}:IModalProps) => {
         <h1>{title}</h1>
         <p>{msj}</p>
         <div className="modalButtons">
-            <Button action={close} label="Cancelar" size='md' type='error' />
-            <Button action={acept} label="Aceptar" size="md" type='success'/>
+            <ButtonCustom action={close} label="Cancelar" size='md' type='error' />
+            <ButtonCustom action={acept} label="Aceptar" size="md" type='success'/>
          
         </div>
       </div>

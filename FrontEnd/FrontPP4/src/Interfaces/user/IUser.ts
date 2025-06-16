@@ -6,7 +6,7 @@ export interface IResponse {
     success:boolean; 
     msj:string ;
     error:string; 
-    result:{}[] ;
+    result:object[] ;
     
 }
 export interface IRegisterUser {

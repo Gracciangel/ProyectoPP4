@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { IBook } from "../../Interfaces/book/IBook";
 import { getBooks } from "../../Helpers/Books";
 import '../../Styles/Card.css'
-import { Spinner } from "../spinner/Spinner";
+import { SpinnerCustom } from "../spinner/Spinner";
 import { Card } from "../Atmos/card/Card";
 
 export const Cards = () => {
@@ -38,7 +38,7 @@ export const Cards = () => {
       }
         {
             load && (
-                <Spinner size='lg' label="Cargando Libros..."/>
+                <SpinnerCustom size='lg' label="Cargando Libros..."/>
             )
         }
       {books.map((b, i) => {

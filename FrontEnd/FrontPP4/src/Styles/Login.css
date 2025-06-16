@@ -1,31 +1,13 @@
-.Login_desk{
-    width: 90vw;
-    height: 100vh;
-    /* padding: 10px; */
-    /* overflow: hidden; */
+.Login{
     display: flex;
     flex-direction: column;
+    gap: 15px;
+    width: 600px;
+    margin: auto;
     justify-content: center;
     align-items: center;
-    
-    div{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        h1{
-            color: white;
-            font-size: 32px;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        }
-        img{
-            width: 200px;
-            height: 200px;
-        }
-        div{
-            display: flex;
-            flex-direction: column;
-            gap: 5rem;
-        }
-    }
+    margin-top: 100px;
+}
+.Login h1{
+    font-size:larger ;
 }

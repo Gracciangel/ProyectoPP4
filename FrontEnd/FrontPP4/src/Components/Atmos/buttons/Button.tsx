@@ -1,11 +1,27 @@
 
+import { Button, Stack } from '@chakra-ui/react';
 import type { IButtons } from '../../../Interfaces/buttons/IButtons'
 import '../../../Styles/Components.css' ;
 
-export const Button = ({type, action, label, size}: IButtons) => {
+
+export const ButtonCustom = ({ action, label, load, styleButton}: IButtons) => {
   return (
-    <button onClick={action} className={type+size} >
-        {label}
-    </button>
+        
+    <Stack direction="row" gap="4" align="center">
+
+      <Button loading={load?.loading } colorPalette="teal" variant="solid"
+      onClick={action}
+      >
+        
+        {
+          styleButton && 
+          (
+            styleButton
+          )
+        } {label}
+      </Button>
+     
+    </Stack>
+      
   )
 }

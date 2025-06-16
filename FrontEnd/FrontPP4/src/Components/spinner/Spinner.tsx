@@ -1,11 +1,12 @@
 
-import type { ISpinner } from '../../Interfaces/spinner/ISpinner'
+import { Spinner } from '@chakra-ui/react';
 import '../../Styles/spinner.css';
-export const Spinner = ({size, label}:ISpinner) => {
+export const SpinnerCustom = () => {
   return (
-    <div className='spinnerContainer'>
-      <div className={`spinner_${size}`}></div>
-      <p>{label}</p>
-    </div>
+     <Spinner
+     size={'xl'}
+    color="red.500"
+    css={{ "--spinner-track-color": "colors.gray.200" }}
+  />
   )
 }

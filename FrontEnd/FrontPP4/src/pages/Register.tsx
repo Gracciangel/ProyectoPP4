@@ -51,7 +51,7 @@ export const Register = () => {
             })}
             showText={true}
             />
-            <Button type="success" action={handleRegister} label="Regsitrar" size="md"/>
+            <Button type="success" action={handleRegister} label="Registrar" size="md"/>
         </div>
     </div>
   )

@@ -34,7 +34,12 @@ export const Register = () => {
                       ? ((response.result[0] as { msj?: string })?.msj ?? 'hubo un error ')
                       : ((response.result as { msj?: string })?.msj ?? 'hubo un error ')
         });
-    
+        setRegisterValue({
+         ...registerValue,
+          name: "",
+          email: "",
+          password: "",
+        })
       } else {
           setRegisterOk(undefined); 
         setError({
@@ -99,12 +104,16 @@ export const Register = () => {
         action={handleRegister}
         label="Registrar"
         size="md"
-        styleButton={<FaUserPlus />}
+        IconButton={<FaUserPlus />}
+        styleButton={{
+          variant: "outline",
+          colorPalette: "green",
+        }}
       />
 
       {/* Mensaje de éxito */}
      {registerOk?.ok && (
-        <Alert.Root status="success" mt={4}>
+        <Alert.Root status={'success'} mt={4}>
           <Alert.Indicator />
           <Alert.Content>
             <Alert.Title>{registerOk.msjOk}</Alert.Title>

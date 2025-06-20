@@ -4,19 +4,22 @@ import type { IButtons } from '../../../Interfaces/buttons/IButtons'
 import '../../../Styles/Components.css' ;
 
 
-export const ButtonCustom = ({ action, label, load, styleButton}: IButtons) => {
+export const ButtonCustom = ({ action, label, load, IconButton, styleButton}: IButtons) => {
   return (
         
     <Stack direction="row" gap="4" align="center">
 
-      <Button loading={load?.loading } colorPalette="teal" variant="solid"
-      onClick={action}
+      <Button
+        loading={load?.loading}
+        colorPalette={styleButton?.colorPalette}
+        variant={styleButton?.variant}
+        onClick={action}
       >
         
         {
-          styleButton && 
+          IconButton && 
           (
-            styleButton
+            IconButton
           )
         } {label}
       </Button>

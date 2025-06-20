@@ -21,8 +21,14 @@ export const Modal = ({title, msj, icon, close, acept}:IModalProps) => {
         <h1>{title}</h1>
         <p>{msj}</p>
         <div className="modalButtons">
-            <ButtonCustom action={close} label="Cancelar" size='md' type='error' />
-            <ButtonCustom action={acept} label="Aceptar" size="md" type='success'/>
+            <ButtonCustom action={close} label="Cancelar" size='md' type='error' styleButton={{
+            variant: 'outline',
+            colorPalette: 'red'
+            }} />
+            <ButtonCustom action={acept} label="Aceptar" size="md" type='success' styleButton={{
+            variant: 'outline',
+            colorPalette: 'green'
+            }}/>
          
         </div>
       </div>

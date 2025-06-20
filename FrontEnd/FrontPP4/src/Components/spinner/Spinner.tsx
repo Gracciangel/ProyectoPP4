@@ -5,8 +5,8 @@ export const SpinnerCustom = () => {
   return (
      <Spinner
      size={'xl'}
-    color="red.500"
-    css={{ "--spinner-track-color": "colors.gray.200" }}
+    color="blue.800"
+    css={{ "--spinner-track-color": "colors.gray.500" }}
   />
   )
 }

@@ -3,6 +3,7 @@ import '../../../Styles/Card.css';
 import { Modal } from '../../Molecules/Modal';
 import { FaDownload } from 'react-icons/fa';
 import { ButtonCustom } from '../buttons/Button';
+import { useNavigate } from 'react-router-dom';
 
 interface ICardProps {
   title: string;
@@ -14,7 +15,8 @@ interface ICardProps {
 export const Card = ({ title, port, languages, download }: ICardProps) => {
   const [flipped, setFlipped] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-
+  const [userActive, setUserActive] = useState(false);
+  const navigate = useNavigate();
   const handleToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
     setFlipped(f => !f);
@@ -22,18 +24,19 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
 
   const handleDownloadClick = (e: React.MouseEvent) => {
     const user = localStorage.getItem('user'); 
+    setModalOpen(true);
     if(user){
       e.stopPropagation();
-      // sólo abre el modal
-      setModalOpen(true);
-
+      setUserActive(true);
+      
     }else{
-      alert('tenes que estar autenticado para descargar el recurso.')
+      e.stopPropagation();
+      setUserActive(false) ;
     }
   };
 
   const handleAccept = () => {
-    if (download) {
+    if (download && userActive) {
       // crea un enlace invisible y dispara la descarga
       const link = document.createElement('a');
       link.href = download;
@@ -41,8 +44,11 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    }else{
+      navigate('/login'); 
+      setModalOpen(false);
+
     }
-    setModalOpen(false);
   };
 
   return (
@@ -51,12 +57,13 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
         <Modal
           close={() => setModalOpen(false)}
           acept={handleAccept}
-          title={`¿Descargar ${title}?`}
-          msj="Se descargará un recurso en formato .zip"
+          title={`${userActive ? `¿Deseas d escargar ${title}?` : 'Inicia sesión para descargar el libro'}`}
+          msj={`${userActive ? 'Se descargará el libro '+title+ ' en formato zip': 'Inicia sesión para descargar el libro '}`}
         />
       )}
 
       <div
+      
         className={`card-container${flipped ? ' flipped' : ''}`}
         onClick={handleToggle}
       >
@@ -67,16 +74,23 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
             <h3>{title}</h3>
           </div>
 
-          {/* Lado trasero */}
           <div className="card-face card-back">
             <img src={port} alt={`Portada de ${title}`} />
             <h3>{title}</h3>
             <ul className="book-languages">
               {languages.map((lang, i) => (
-                <li key={i}>{lang}</li>
+               <div className='containerLanguages' key={i} >
+                <p>Lenguaje disponible</p>
+                 <li>{lang}</li>
+               </div>
               ))}
             </ul>
-              <ButtonCustom label='Descargar' action={ handleDownloadClick} styleButton={<FaDownload/>} size='md' type='success'
+              <ButtonCustom label='Descargar' action={ handleDownloadClick} 
+              IconButton={<FaDownload/>} size='md' type='success'
+              styleButton={{
+                variant: 'outline',
+                colorPalette: 'green',
+              }}
               
               />
           </div>

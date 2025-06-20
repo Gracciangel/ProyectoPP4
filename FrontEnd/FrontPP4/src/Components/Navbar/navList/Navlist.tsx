@@ -31,6 +31,10 @@ export const Navlist = () => {
       label: 'Home',
       path: '/',
     },
+    {
+      label: 'Libros',  
+      path: '/books',
+    },
     // Registrar solo se muestra si NO hay usuario en localStorage
     ...(!user
       ? [
@@ -68,7 +72,7 @@ export const Navlist = () => {
               />
                 ):
                 (
-                    <AvatarRoot onClick={()=> alert(user)}>
+                    <AvatarRoot onClick={()=> alert(user)} style={{ cursor: 'pointer' }}>
                         <AvatarFallback>{userData?.name}</AvatarFallback>
                     </AvatarRoot>
                 )

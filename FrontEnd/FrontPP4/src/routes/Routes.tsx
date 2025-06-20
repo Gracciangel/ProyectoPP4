@@ -6,6 +6,7 @@ import { Auth } from '../pages/Login';
 import App from '../App';
 import { Register } from '../pages/Register';
 import { Perfil } from '../pages/Perfil';
+import { Books } from '../pages/Books';
 
 export const AppRoutes = () => (
   <BrowserRouter>
@@ -15,6 +16,7 @@ export const AppRoutes = () => (
         <Route path='/register' element={<Register/>} />
         <Route path="login" element={<Auth />} />
         <Route path="perfil" element={<Perfil />} />
+        <Route path="books" element={<Books />} />
         <Route path="profile" element={<Navigate to="/login" replace />} />
       </Route>
       <Route path="*" element={<p>Página no encontrada</p>} />

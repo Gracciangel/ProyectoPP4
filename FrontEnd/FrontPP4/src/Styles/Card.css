@@ -75,7 +75,7 @@
   font-size: 15px;
 }
 .card-back img{
-  width: 100px;
+  width: 70px;
   height: 100px;
 }
 .card-back h3 {
@@ -90,10 +90,10 @@
   flex-wrap: wrap;
 }
 .book-languages li {
-  background: #f0f0f0;
+  background: #507246;
   padding: 2px 6px;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 20px;
 }
 .book-download {
   padding: 8px 16px;
@@ -103,9 +103,27 @@
   border-radius: 4px;
   cursor: pointer;
 }
-
+.containerLanguages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
 .book-download a{
 text-decoration: none;
 color: white;
 font-size: 20px;
+}
+
+
+.books-loading{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  h1{
+    font-size: 15px;
+  }
 }

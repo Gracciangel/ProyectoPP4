@@ -67,7 +67,12 @@ export const Auth = () => {
       />
       
       <ButtonCustom label='Iniciar Sesion' type='success' action={handleLogin} size='md'
-      styleButton={<LuUser/>}
+      IconButton={<LuUser/>}
+      styleButton={{
+        variant: 'outline',
+        colorPalette: 'blue'
+        }}
+
       />
       {
         err !== "" && (

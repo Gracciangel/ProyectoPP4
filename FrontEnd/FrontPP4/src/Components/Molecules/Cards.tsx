@@ -31,6 +31,7 @@ export const Cards = () => {
 
   return (
     <div className="cards-grid">
+      
       {
         error && (
           <p>{error}</p>
@@ -38,16 +39,21 @@ export const Cards = () => {
       }
         {
             load && (
-                <SpinnerCustom size='lg' label="Cargando Libros..."/>
+                <div className="books-loading">
+                  <h1>Cargando Libros...</h1>
+                  <SpinnerCustom />
+                </div>
             )
         }
       {books.map((b, i) => {
         const coverUrl = b.formats["image/jpeg"] ?? "";
         return (
+        <>
        <div key={i}>
          <Card title={b.title} port={coverUrl} languages={b.languages} 
          download={b.formats['application/octet-stream']}/>
        </div>
+        </>
         );
       })}
     </div>

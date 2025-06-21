@@ -157,3 +157,16 @@
     align-items: center;
     justify-content: center;
 }
+.inputsDatos{
+    width: 73%;
+    text-align: center;
+    border-radius: 7px;
+    padding: 5px;
+}
+.label{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    width: 70%;
+    margin-top: 10px;
+}

@@ -1,7 +1,7 @@
 import { ModalChangePassword } from '../Components/Molecules/ModalChangePassword'
 import { ButtonCustom } from '../Components/Atmos/buttons/Button'
 import { useEffect, useState } from 'react'
-
+import '../Styles/Components.css';
 type User = {
   email: string
   name: string
@@ -46,13 +46,13 @@ export const Datos = () => {
                 <ModalChangePassword close={()=> setChangePassword(false)} acept={()=> alert('acept')}/>
             )
         }
-        <label htmlFor="">Nombre</label>
-        <input type="text" disabled={true} value={user.name.toUpperCase()} />
-        <label htmlFor="">Email</label>
-        <input type="text" disabled={true} value={user.email} />
-        <label htmlFor="">Rol</label>
-        <input type="text" disabled={true} value={user.rol} />
-        <label htmlFor="">Imagen</label>
+        <label htmlFor="" className='label'>Nombre</label>
+        <input type="text" className='inputsDatos' disabled={true} value={user.name.toUpperCase()} />
+        <label htmlFor="" className='label'>Email</label>
+        <input type="text" className='inputsDatos' disabled={true} value={user.email} />
+        <label htmlFor="" className='label'>Rol</label>
+        <input type="text" className='inputsDatos' disabled={true} value={user.rol} />
+        <label htmlFor="" className='label'>Imagen</label>
         {
             user.photoUrl ?(
                 <img src={user.photoUrl} alt="" />
@@ -60,7 +60,7 @@ export const Datos = () => {
             :
             (
                 
-                <input type="text" disabled={true} value="No hay imagen de perfil" />
+                <input type="text" disabled={true} className='inputsDatos' value="No hay imagen de perfil" />
             )
         }
         </>

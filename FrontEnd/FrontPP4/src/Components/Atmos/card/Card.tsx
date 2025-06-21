@@ -6,7 +6,9 @@ import { ButtonCustom } from '../buttons/Button';
 import { useNavigate } from 'react-router-dom';
 import { HiHeart } from 'react-icons/hi2';
 import { saveInFavorites } from '../../../Helpers/Books'; 
-import { Spinner } from 'react-bootstrap';
+import { toaster } from '@/Components/ui/toaster';
+import { GiToaster } from 'react-icons/gi';
+import { Alert } from '@chakra-ui/react';
 
 interface ICardProps {
   title: string;
@@ -18,6 +20,7 @@ interface ICardProps {
 export const Card = ({ title, port, languages, download }: ICardProps) => {
   const [flipped, setFlipped] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [saveBook , setSaveBook] = useState<boolean>(false);
   const [NotSaveFavorite, setNotSaveFavorite] = useState(false);
   const [userActive, setUserActive] = useState(false);
   const [load, setLoad] = useState<boolean>(false) ;
@@ -41,7 +44,7 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
   else {
     
     const userData = JSON.parse(user)[0];
-    console.log('Usuario autenticado:', userData);
+    
     
     const favoriteBook = {
       email:    userData.email,
@@ -56,7 +59,10 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
   );
   
   if (saveBook.success) {
-    setLoad(false)
+    setSaveBook(true)
+    setTimeout(()=>{
+      setSaveBook(false)
+    }, 2000)
   } else {
     console.log(
       'Error al guardar en favoritos:',
@@ -104,16 +110,12 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
 
   return (
     <>
-    {
-      load && (
-        <Spinner size='sm'/>
-      )
-    }
+   
       {modalOpen && (
         <Modal
           close={() => setModalOpen(false)}
           acept={handleAccept}
-          title={`${userActive ? `¿Deseas d escargar ${title}?` : 'Inicia sesión para descargar el libro'}`}
+          title={`${userActive ? `¿Deseas descargar ${title}?` : 'Inicia sesión para descargar el libro'}`}
           msj={`${userActive ? 'Se descargará el libro '+title+ ' en formato zip': 'Inicia sesión para descargar el libro '}`}
         />
       )}
@@ -169,6 +171,14 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
             </div>
           </div>
         </div>
+         {
+      saveBook && (
+         <Alert.Root status="success">
+        <Alert.Indicator />
+        <Alert.Title>{`${title} agregado a favoritos.`}</Alert.Title>
+      </Alert.Root>
+      )
+    }
       </div>
     </>
   );

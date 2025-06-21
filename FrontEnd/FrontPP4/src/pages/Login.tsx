@@ -39,7 +39,7 @@ export const Auth = () => {
           localStorage.setItem('user', JSON.stringify(res.result)); 
           navigate('/perfil')
         }else{
-          console.log(res)
+          
           setLoad(false); 
           setErrDescription(res.msj)
           setErr(res.error) ;

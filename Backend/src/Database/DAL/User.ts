@@ -123,7 +123,7 @@ export const SesionInit = async (email: string, password: string) => {
 
     if (verifyEmail.exist && verifyPass) {
       const userData = await new Promise<ResponseDto>((resolve, _reject) => {
-        SQL.get(UsersSQL.sesionInit,  (err, row: Users | undefined) => {
+        SQL.get(UsersSQL.sesionInit, [email], (err, row: Users | undefined) => {
           if (err || !row) {
             resolve(new ResponseDto(false, 'Credenciales inválidas', err?.message ?? null, null));
           } else {
@@ -147,7 +147,35 @@ export const SesionInit = async (email: string, password: string) => {
     throw error;
   }
 };
-function runAsync(createTypesRoles: string) {
-  throw new Error("Function not implemented.");
-}
 
+//actualizacion de password
+
+export const updatePassword = async (email:string, password:string, newPassword:string, newPassword2:string) => {
+  try {
+    const verifiyBetweenPasswords = newPassword === newPassword2 ;
+    if(!verifiyBetweenPasswords){
+      return new ResponseDto(false, 'las contraseñas no coinciden', 'Error, verificar los valores enviados', null) ;
+    };
+    const verifByPassword = await VerifyByPassword(newPassword) ; 
+    if(!verifByPassword){
+      return new ResponseDto(false , 'error al verificar la contrseña', 'error', verifByPassword ) ;
+    }
+   const emailExit = await verifyEmailExist(email) ;
+   const oldPassword = await hashCompare(email, password) ;
+  if(oldPassword && emailExit){
+    const pwdHashed = await hashPassword(newPassword) ;
+    const update = await new Promise<ResponseDto>((resolve, _reject)=> {
+     SQL.run(UsersSQL.updatePassword, [pwdHashed, email], (err:Error, row: any) => {
+      if(err && !row){
+        return new ResponseDto(false, 'error', 'el pasword no pudo ser actualizado.', null)
+      }else{
+        return new ResponseDto(true, 'OK', 'el pasword fue Actiualizado correctamente.', null)
+      }
+     })
+    })
+
+  }
+  } catch (error) {
+    return new ResponseDto(false, 'Error en el servidor', 'error 500', error) ;
+  }
+}

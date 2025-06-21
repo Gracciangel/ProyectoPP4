@@ -1,8 +1,10 @@
 import { Request, RequestHandler, response, Response, Router } from "express";
-import { CreateUsers, SesionInit } from "../Database/DAL/User";
+import { CreateUsers, SesionInit, updatePassword } from "../Database/DAL/User";
 import { GetBooks } from "../Helper/ApiBook";
 import { ResponseDto } from "../Models/ResponseDto";
 import { deleteFavorite, GetAllFavorites, SaveInFavorites } from "../Database/DAL/BooksFV";
+import { json } from "stream/consumers";
+import { userList } from "../Database/DAL/Admin";
 const routes = Router() ; 
 
 const CreteUserController = async (req: Request , res:Response) => {
@@ -86,6 +88,7 @@ const GetFavoritesByUser :any = async (req: Request, res: Response) => {
     });
   }
 };
+
 const DeleteFavoriteItem:any = async (req: Request, res: Response) => {
   try {
     const responseDelete = await deleteFavorite(req.body["email"],req.body['title']);
@@ -100,6 +103,53 @@ const DeleteFavoriteItem:any = async (req: Request, res: Response) => {
 };
 
 
+//update passowrd 
+
+const updatePasswordController:any = async (req:Request, res:Response) => {
+  try {
+    const passwordUpdated = await updatePassword(req.body['email'], req.body['password'], req.body['newPassword'], req.body['newPassword2']) ;
+    return res.status(200).json(passwordUpdated); 
+
+  } catch (error) {
+    return res.status(500).json({
+      succes: false, 
+      msj: 'Error interno del servidor',
+      err: error 
+    })
+  }
+}
+
+//administrador
+
+
+
+export const getUsersController:any = async (req: Request, res: Response) => {
+  try {
+    const listUsers = await userList();
+
+    // ✅ Validamos el éxito del DTO y que `result` sea un arreglo
+    if (listUsers.success && Array.isArray(listUsers.result)) {
+      return res.status(200).json({
+        success: true,
+        msj: 'Usuarios obtenidos',
+        data: listUsers.result
+      });
+    } else {
+      return res.status(404).json({
+        success: false,
+        msj: 'No se pudieron obtener usuarios',
+        error: listUsers.error
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      msj: 'Error interno del servidor',
+      err: error
+    });
+  }
+};
+
 routes.post('/initSesion', SesionInitController)
 routes.post('/registerUser', CreteUserController) ;
 routes.get('/books', GetBooksController) ;
@@ -107,4 +157,10 @@ routes.get('/books', GetBooksController) ;
 routes.post('/favorites', SaveFavoritesByUser) ; 
 routes.post('/get/myfavorites', GetFavoritesByUser);
 routes.delete('/delete/favorite', DeleteFavoriteItem)
+
+//utilidades usuario
+//actulizar roles de usuario
+routes.post('/updatePasword', updatePasswordController)
+//obtener todos los usuarios
+routes.get('/allUsers', getUsersController)
 export default routes ;

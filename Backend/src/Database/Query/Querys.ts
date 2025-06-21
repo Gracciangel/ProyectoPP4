@@ -9,9 +9,13 @@ export const UsersSQL = {
 
   deleteUserByEmail: `DELETE FROM USERS WHERE email = ?;`,
 
-  getUserIdByMail: `SELECT id FROM USERS WHERE email = ?;`,
+    getAllUsers: `SELECT name , email, case when 
+    rol_id = 2 then 'user'
+    else 'admin' end as Rol ,photoUrl FROM USERS  `,
 
-  sesionInit: `SELECT name, email, photoUrl, rol_id as rol FROM users ;`,
+  updatePassword: `UPDATE USERS SET password = ? WHERE email = ? ;`,
+
+  sesionInit: `SELECT name, email, photoUrl, rol_id as rol FROM users where email = ? ;`,
 
   selectPwdToHash: `SELECT password FROM USERS WHERE email = ? ; ` ,
 
@@ -22,3 +26,7 @@ export const UsersSQL = {
   getFavorites: `SELECT f.title, f.pathPhoto FROM FV f JOIN USERS u ON f.emailUser = u.email where u.email = ? ;`, 
 };
 
+export const TypeUserSql = {
+  listTypes: 'SELECT DESCRIPCION FROM types_roles ;',
+  updateRol: 'UPDATE USERS SET rol_id = ? WHERE email = ? ;'
+}

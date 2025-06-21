@@ -19,6 +19,6 @@ export const UsersSQL = {
 
   deleteFavorite: `DELETE FROM FV WHERE title = ? AND emailUser = ?;`,
 
-  getFavorites: `SELECT f.title, f.pathPhoto FROM FV f JOIN USERS u ON f.emailUser = u.email ? ;`, 
+  getFavorites: `SELECT f.title, f.pathPhoto FROM FV f JOIN USERS u ON f.emailUser = u.email where u.email = ? ;`, 
 };
 

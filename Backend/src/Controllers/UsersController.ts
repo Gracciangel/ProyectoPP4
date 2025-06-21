@@ -1,8 +1,8 @@
-import { Request, response, Response, Router } from "express";
+import { Request, RequestHandler, response, Response, Router } from "express";
 import { CreateUsers, SesionInit } from "../Database/DAL/User";
 import { GetBooks } from "../Helper/ApiBook";
 import { ResponseDto } from "../Models/ResponseDto";
-import { SaveInFavorites } from "../Database/DAL/BooksFV";
+import { deleteFavorite, GetAllFavorites, SaveInFavorites } from "../Database/DAL/BooksFV";
 const routes = Router() ; 
 
 const CreteUserController = async (req: Request , res:Response) => {
@@ -66,11 +66,45 @@ const SaveFavoritesByUser = async (req:Request, res:Response)=> {
 }
 }
 
+// Controlador
+const GetFavoritesByUser :any = async (req: Request, res: Response) => {
+  try {
+   const response = await GetAllFavorites(req.body['email']);
+    if (Array.isArray(response)) {
+      return res.status(200).json({
+        success: true,
+        message: 'Favoritos obtenidos correctamente',
+        favorites: response,
+      });
+    }
+  } catch (error) {
+    console.error('Error al obtener los favoritos:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al obtener los favoritos',
+      error,
+    });
+  }
+};
+const DeleteFavoriteItem:any = async (req: Request, res: Response) => {
+  try {
+    const responseDelete = await deleteFavorite(req.body["email"],req.body['title']);
+    return res.status(200).json(responseDelete);
+  } catch (error) {
+    return res.status(500).json({
+      succes: false,
+      msj: 'Error interno al eliminar el libro',
+      error
+    });
+  }
+};
+
+
 routes.post('/initSesion', SesionInitController)
 routes.post('/registerUser', CreteUserController) ;
 routes.get('/books', GetBooksController) ;
 //routes favorites 
-routes.post('/get/favorites', SaveFavoritesByUser) ; 
-
-
+routes.post('/favorites', SaveFavoritesByUser) ; 
+routes.post('/get/myfavorites', GetFavoritesByUser);
+routes.delete('/delete/favorite', DeleteFavoriteItem)
 export default routes ;

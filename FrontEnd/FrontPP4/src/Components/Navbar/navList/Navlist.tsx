@@ -8,12 +8,14 @@ import {
   AvatarRoot,
   Button,
   Menu,
+  MenuItem,
   Portal,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { LuArrowDown, LuLogOut } from "react-icons/lu";
 import { MdDataUsage } from "react-icons/md";
 import { HiHeart } from "react-icons/hi";
+import { FaUserShield } from "react-icons/fa";
 
 interface INavList {
   label?: string;
@@ -101,7 +103,7 @@ export const Navlist = () => {
                 color: "#fff",
               }}
             >
-              {userData?.name?.charAt(0).toUpperCase() || "U"}
+             
             </AvatarFallback>
           </AvatarRoot>
           {userData?.name|| "Usuario"}  
@@ -112,12 +114,15 @@ export const Navlist = () => {
           <Menu.Content>
             <Menu.Item value="new-txt-a">
              {
-              userData?.rol === 2 && (
-                <span>Administrar Libros</span>
+              userData?.rol === 1 && (
+                <div onClick={() => navigate("/admin")} style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
+                  <FaUserShield/>
+                  <span style={{ marginLeft: "8px" }}>Administrador</span>
+                </div>
               ) 
              }
             </Menu.Item>
-            <Menu.Item value="new-file-a">
+            <Menu.Item value="new-file-a" onClick={() => navigate("/favoritos")  }>
               <HiHeart/>
              Favoritos
             </Menu.Item>
@@ -131,6 +136,7 @@ export const Navlist = () => {
             </Menu.Item>
             <Menu.Item value="Cerrar Sesión" onClick={() => {
               localStorage.removeItem("user");
+              localStorage.removeItem("favorites");
               navigate("/");
             }}>
               <LuLogOut/>

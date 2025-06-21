@@ -25,44 +25,44 @@ export const SaveInFavorites = async (email:string , titleBook:string, pathPhoto
 }
 
 //leer libros en favoritos
-export const getFavoritesByUser = async (email: string): Promise<IFavoritesList[] | {sucess:boolean, msj:string}> => {
-  try {
-    const userId = await getUserIdByEmail(email);
-    if (userId === null) {
-      return { sucess: false, msj: 'Usuario no encontrado.' };
-    }else{
-      const favoritesList = await new Promise<IFavoritesList[]>((resolve, reject) => {
-        SQL.all(UsersSQL.getFavorites, [userId], (error: Error | null, rows: IFavoritesList[]) => {
+export const GetAllFavorites = async (email: string): Promise<IFavoritesList[] | {success:boolean, message:string}> => {
+   try {
+    if (!email) {
+      return { success: false, message: 'Usuario no encontrado.' };
+    }
+    const favoritesList = await new Promise<IFavoritesList[]>((resolve, reject) => {
+      SQL.all(
+        UsersSQL.getFavorites,    // por ejemplo: "SELECT title, photo as pathPhoto FROM favorites WHERE emailUser = ?"
+        [email],
+        (error: Error | null, rows: IFavoritesList[]) => {
           if (error) {
             console.error('Error al obtener los favoritos:', error.message);
             return reject(error);
-          } else {
-            resolve(rows);
           }
-        });
-      });
-      return favoritesList;
-    }
+          resolve(rows);
+        }
+      );
+    });
+    return favoritesList;
   } catch (error) {
     console.error('Error al obtener los favoritos:', error);
-    return { sucess: false, msj: 'Error interno del servidor' };
+    return { success: false, message: 'Error interno del servidor' };
   }
 }
 
 //eliminar un libro de favoritos
-export const deleteFavorite = async (email:string): Promise<{succes:boolean, msj:string}> => {
+export const deleteFavorite = async (email:string, title:string): Promise<{succes:boolean, msj:string}> => {
   try {
-    const userID = await getUserIdByEmail(email);
-    if (userID === null) {
+    if (email === null) {
       return { succes: false, msj: 'Usuario no encontrado.' };
     }else {
       const deleteBook = await new Promise((resolve, reject) => {
-        SQL.run(UsersSQL.deleteFavorite, [userID], (error:Error | null)=> {
+        SQL.run(UsersSQL.deleteFavorite, [title,email], (error:Error | null)=> {
           if(error){
             console.error('Error al eliminar el libro de favoritos:', error.message);
             return reject(error);
           }else{
-            resolve({ succes: true, msj: 'Libro eliminado de favoritos.' });
+            resolve({ succes: true, msj: title + ', borrado con éxito' });
           }
         })
       })
@@ -74,28 +74,4 @@ export const deleteFavorite = async (email:string): Promise<{succes:boolean, msj
 }
 
 
-
-
-//metodos para obtencion de datos del usuario 
-
-const getUserIdByEmail = async (email: string): Promise<number | null> => {
-  try {
-   const userID = await new Promise<number | null>((resolve, reject) => {
-      SQL.get(UsersSQL.getUserIdByMail, [email], (err, row:number) => {
-        if (err) {
-          console.error('Error al obtener el ID del usuario:', err.message);
-          return reject(err);
-        }
-        else {
-            resolve( row ? row : null);
-        }
-      });
-    });
-    return userID;
-  } 
-  catch (error) {
-    console.error('Error al obtener el ID del usuario:', error);
-    return -1;
-  }
-}
 

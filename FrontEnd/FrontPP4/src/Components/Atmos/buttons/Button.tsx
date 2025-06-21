@@ -4,7 +4,7 @@ import type { IButtons } from '../../../Interfaces/buttons/IButtons'
 import '../../../Styles/Components.css' ;
 
 
-export const ButtonCustom = ({ action, label, load, IconButton, styleButton}: IButtons) => {
+export const ButtonCustom = ({ action, label, load, IconButton, styleButton, disabled}: IButtons) => {
   return (
         
     <Stack direction="row" gap="4" align="center">
@@ -14,6 +14,7 @@ export const ButtonCustom = ({ action, label, load, IconButton, styleButton}: IB
         colorPalette={styleButton?.colorPalette}
         variant={styleButton?.variant}
         onClick={action}
+        disabled={disabled}
       >
         
         {

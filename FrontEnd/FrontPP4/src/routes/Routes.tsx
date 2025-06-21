@@ -7,6 +7,8 @@ import App from '../App';
 import { Register } from '../pages/Register';
 import { Perfil } from '../pages/Perfil';
 import { Books } from '../pages/Books';
+import { Favorites } from '../pages/Favorites';
+import { Admin } from '../pages/Admin';
 
 export const AppRoutes = () => (
   <BrowserRouter>
@@ -17,6 +19,8 @@ export const AppRoutes = () => (
         <Route path="login" element={<Auth />} />
         <Route path="perfil" element={<Perfil />} />
         <Route path="books" element={<Books />} />
+        <Route path="favoritos" element={<Favorites />} />
+        <Route path="admin" element={<Admin />} />
         <Route path="profile" element={<Navigate to="/login" replace />} />
       </Route>
       <Route path="*" element={<p>Página no encontrada</p>} />

@@ -17,6 +17,7 @@ interface ICardProps {
 export const Card = ({ title, port, languages, download }: ICardProps) => {
   const [flipped, setFlipped] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [NotSaveFavorite, setNotSaveFavorite] = useState(false);
   const [userActive, setUserActive] = useState(false);
   const navigate = useNavigate();
 
@@ -26,30 +27,30 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
   };
 
 
- const handleSaveFavorite = async (e: React.MouseEvent) => {
-  e.stopPropagation();
+ const handleSaveFavorite = async () => {
+  
   const user = localStorage.getItem('user');
-  if (!user) {
-    console.log('Usuario no autenticado. No se puede guardar en favoritos.');
-    return;
+  if (!user) {  
+    setModalOpen(true);
+    setNotSaveFavorite(true);
   }
-  
-  
-  const userData = JSON.parse(user)[0];
-  console.log('Usuario autenticado:', userData);
-
-  const favoriteBook = {
-    email:    userData.email,
-    titleBook: title,
-    pathPhoto: port,
-  };
-
-  const saveBook = await saveInFavorites(
-    favoriteBook.email,
-    favoriteBook.titleBook,
-    favoriteBook.pathPhoto
+  else {
+    
+    const userData = JSON.parse(user)[0];
+    console.log('Usuario autenticado:', userData);
+    
+    const favoriteBook = {
+      email:    userData.email,
+      titleBook: title,
+      pathPhoto: port,
+    };
+    
+    const saveBook = await saveInFavorites(
+      favoriteBook.email,
+      favoriteBook.titleBook,
+      favoriteBook.pathPhoto
   );
-
+  
   if (saveBook.success) {
     console.log('Libro guardado en favoritos:', favoriteBook);
   } else {
@@ -58,6 +59,8 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
       saveBook.message
     );
   }
+}
+  
 };
 
   const handleDownloadClick = (e: React.MouseEvent) => {
@@ -82,7 +85,12 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-    }else{
+    }
+    else if (!NotSaveFavorite && userActive) {
+      setModalOpen(false);
+      handleSaveFavorite() ;
+    }
+    else{
       navigate('/login'); 
       setModalOpen(false);
 
@@ -97,6 +105,14 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
           acept={handleAccept}
           title={`${userActive ? `¿Deseas d escargar ${title}?` : 'Inicia sesión para descargar el libro'}`}
           msj={`${userActive ? 'Se descargará el libro '+title+ ' en formato zip': 'Inicia sesión para descargar el libro '}`}
+        />
+      )}
+      {NotSaveFavorite && modalOpen && (
+        <Modal
+          close={() => setModalOpen(false)}
+          acept={handleAccept}
+          title="Inicia sesión"
+          msj="Para guardar un libro en favoritos debes iniciar sesión."
         />
       )}
 

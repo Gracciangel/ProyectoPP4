@@ -14,4 +14,5 @@ export interface IButtons{
         loading:boolean 
         isLoad: boolean
     }
+    disabled?: boolean;
 }

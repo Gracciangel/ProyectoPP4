@@ -12,6 +12,7 @@ import { TfiEmail } from 'react-icons/tfi';
 import { useNavigate } from 'react-router-dom';
 
 
+
 export const Auth = () => {
     const navigate = useNavigate() ;
     const [userValue, setUserValue] = useState<IUser>({
@@ -26,10 +27,14 @@ export const Auth = () => {
       if(err !== ''){
         setErr('')
       }
+
       const res = await authUser(false, userValue, undefined); 
+     
+      
       try {
         setLoad(true); 
         if(res.success){
+      
           setLoad(false)
           localStorage.setItem('user', JSON.stringify(res.result)); 
           navigate('/perfil')
@@ -46,11 +51,7 @@ export const Auth = () => {
 
   return (
     <div>
-      {
-        load && (
-          <SpinnerCustom/>
-        )
-      }
+      
     <div className='Login'>
         <h1>Inicia Sesión</h1>
       <Inputs placeholder='Ingresa tu email' type='text' typeSize='md' required={
@@ -72,8 +73,13 @@ export const Auth = () => {
         variant: 'outline',
         colorPalette: 'blue'
         }}
-
+        disabled={load}
       />
+      {
+        load && (
+          <SpinnerCustom/>
+        )
+      }
       {
         err !== "" && (
         <div style={{

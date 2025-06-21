@@ -6,6 +6,7 @@ import { ButtonCustom } from '../buttons/Button';
 import { useNavigate } from 'react-router-dom';
 import { HiHeart } from 'react-icons/hi2';
 import { saveInFavorites } from '../../../Helpers/Books'; 
+import { Spinner } from 'react-bootstrap';
 
 interface ICardProps {
   title: string;
@@ -19,6 +20,9 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [NotSaveFavorite, setNotSaveFavorite] = useState(false);
   const [userActive, setUserActive] = useState(false);
+  const [load, setLoad] = useState<boolean>(false) ;
+
+
   const navigate = useNavigate();
 
   const handleToggle = (e: React.MouseEvent) => {
@@ -52,7 +56,7 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
   );
   
   if (saveBook.success) {
-    console.log('Libro guardado en favoritos:', favoriteBook);
+    setLoad(false)
   } else {
     console.log(
       'Error al guardar en favoritos:',
@@ -78,7 +82,7 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
 
   const handleAccept = () => {
     if (download && userActive) {
-      
+      setLoad(true)
       const link = document.createElement('a');
       link.href = download;
       link.download = `${title}.zip`;
@@ -87,6 +91,7 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
       document.body.removeChild(link);
     }
     else if (!NotSaveFavorite && userActive) {
+      setLoad(true)
       setModalOpen(false);
       handleSaveFavorite() ;
     }
@@ -99,6 +104,11 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
 
   return (
     <>
+    {
+      load && (
+        <Spinner size='sm'/>
+      )
+    }
       {modalOpen && (
         <Modal
           close={() => setModalOpen(false)}

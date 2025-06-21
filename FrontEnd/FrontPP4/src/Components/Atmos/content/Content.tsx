@@ -11,7 +11,7 @@ export const Content = ({text, size, title, classStyle}: IContentProp) => {
         {
             title && 
             (
-                <h1 className={`ContentTitle${classStyle}`}>{title}</h1>
+                <h1 className={`ContentTitle${classStyle}`} style={{fontSize:'30px'}}>{title}</h1>
             )
         }
         <p className={`content${classStyle}`}>{text}</p>

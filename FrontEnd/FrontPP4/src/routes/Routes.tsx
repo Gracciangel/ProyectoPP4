@@ -9,6 +9,7 @@ import { Perfil } from '../pages/Perfil';
 import { Books } from '../pages/Books';
 import { Favorites } from '../pages/Favorites';
 import { Admin } from '../pages/Admin';
+import { Datos } from '../pages/Datos';
 
 export const AppRoutes = () => (
   <BrowserRouter>
@@ -21,6 +22,7 @@ export const AppRoutes = () => (
         <Route path="books" element={<Books />} />
         <Route path="favoritos" element={<Favorites />} />
         <Route path="admin" element={<Admin />} />
+        <Route path="datos" element={<Datos />} />
         <Route path="profile" element={<Navigate to="/login" replace />} />
       </Route>
       <Route path="*" element={<p>Página no encontrada</p>} />

@@ -15,4 +15,8 @@ export interface IButtons{
         isLoad: boolean
     }
     disabled?: boolean;
+    margin?:{
+        top:string,
+        bottom:string
+    }
 }

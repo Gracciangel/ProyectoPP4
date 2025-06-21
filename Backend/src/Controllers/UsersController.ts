@@ -88,7 +88,7 @@ const GetFavoritesByUser :any = async (req: Request, res: Response) => {
     });
   }
 };
-
+//eliminar de favoritos
 const DeleteFavoriteItem:any = async (req: Request, res: Response) => {
   try {
     const responseDelete = await deleteFavorite(req.body["email"],req.body['title']);

@@ -28,5 +28,6 @@ export const UsersSQL = {
 
 export const TypeUserSql = {
   listTypes: 'SELECT DESCRIPCION FROM types_roles ;',
-  updateRol: 'UPDATE USERS SET rol_id = ? WHERE email = ? ;'
+  updateRol: 'UPDATE USERS SET rol_id = ? WHERE email = ? ;',
+  delteUsersList: 'delete  from users where email in(?)'
 }

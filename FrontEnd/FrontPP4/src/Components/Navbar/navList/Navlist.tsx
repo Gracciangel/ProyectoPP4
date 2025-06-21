@@ -91,16 +91,18 @@ export const Navlist = () => {
               ) : (
               <Menu.Root>
       <Menu.Trigger asChild>
-        <Button variant="outline" size="sm">
+        <Button variant="outline" size="sm" style={{border:'none'}}>
           <AvatarRoot className="avatar">
             <AvatarImage
+            style={{width:'80%', height:'80%'}}
               src={userData?.photoUrl || ""}
               alt={userData?.name || "User Avatar"}
             />
             <AvatarFallback
               style={{
+                margin:"auto",
                 backgroundColor: colorSelected,
-                color: "#fff",
+                color: "#000000",
               }}
             >
              
@@ -116,7 +118,7 @@ export const Navlist = () => {
              {
               userData?.rol === 1 && (
                 <div onClick={() => navigate("/admin")} style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
-                  <FaUserShield/>
+                  <FaUserShield />
                   <span style={{ marginLeft: "8px" }}>Administrador</span>
                 </div>
               ) 
@@ -130,7 +132,7 @@ export const Navlist = () => {
               <LuArrowDown/>
              Mis Descargas
             </Menu.Item>
-            <Menu.Item value="open-file-a">
+            <Menu.Item value="open-file-a" onClick={()=> navigate('/datos')}>
               <MdDataUsage/>
             Mis Datos
             </Menu.Item>

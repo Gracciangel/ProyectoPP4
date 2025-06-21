@@ -13,9 +13,10 @@ export const SQL = new sqlite3.Database(
     } else {
       console.log('Conectado a biblioteca.db');
       
-      SQL.run('PRAGMA journal_mode = WAL;');
+      SQL.exec('PRAGMA journal_mode = WAL;');
       
-      SQL.run('PRAGMA busy_timeout = 5000;');
+      SQL.configure('busyTimeout', 5000);
+      SQL.serialize(); 
     }
   }
 );

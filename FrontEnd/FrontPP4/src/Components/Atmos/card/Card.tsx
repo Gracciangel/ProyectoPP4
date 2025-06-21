@@ -4,12 +4,14 @@ import { Modal } from '../../Molecules/Modal';
 import { FaDownload } from 'react-icons/fa';
 import { ButtonCustom } from '../buttons/Button';
 import { useNavigate } from 'react-router-dom';
+import { HiHeart } from 'react-icons/hi2';
+import { saveInFavorites } from '../../../Helpers/Books'; 
 
 interface ICardProps {
   title: string;
   port: string;
   languages: string[];
-  download?: string;  // URL del ZIP
+  download?: string;  
 }
 
 export const Card = ({ title, port, languages, download }: ICardProps) => {
@@ -17,10 +19,46 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [userActive, setUserActive] = useState(false);
   const navigate = useNavigate();
+
   const handleToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
     setFlipped(f => !f);
   };
+
+
+ const handleSaveFavorite = async (e: React.MouseEvent) => {
+  e.stopPropagation();
+  const user = localStorage.getItem('user');
+  if (!user) {
+    console.log('Usuario no autenticado. No se puede guardar en favoritos.');
+    return;
+  }
+  
+  
+  const userData = JSON.parse(user)[0];
+  console.log('Usuario autenticado:', userData);
+
+  const favoriteBook = {
+    email:    userData.email,
+    titleBook: title,
+    pathPhoto: port,
+  };
+
+  const saveBook = await saveInFavorites(
+    favoriteBook.email,
+    favoriteBook.titleBook,
+    favoriteBook.pathPhoto
+  );
+
+  if (saveBook.success) {
+    console.log('Libro guardado en favoritos:', favoriteBook);
+  } else {
+    console.log(
+      'Error al guardar en favoritos:',
+      saveBook.message
+    );
+  }
+};
 
   const handleDownloadClick = (e: React.MouseEvent) => {
     const user = localStorage.getItem('user'); 
@@ -37,7 +75,7 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
 
   const handleAccept = () => {
     if (download && userActive) {
-      // crea un enlace invisible y dispara la descarga
+      
       const link = document.createElement('a');
       link.href = download;
       link.download = `${title}.zip`;
@@ -85,7 +123,16 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
                </div>
               ))}
             </ul>
-              <ButtonCustom label='Descargar' action={ handleDownloadClick} 
+
+            <div className='buttonsCard'>
+                <ButtonCustom label='Favorito' action={ handleSaveFavorite} 
+              IconButton={<HiHeart/>} size='md' type='success'
+              styleButton={{
+                variant: 'outline',
+                colorPalette: 'red',
+              }}
+              />
+                <ButtonCustom label='Descargar' action={ handleDownloadClick} 
               IconButton={<FaDownload/>} size='md' type='success'
               styleButton={{
                 variant: 'outline',
@@ -93,6 +140,7 @@ export const Card = ({ title, port, languages, download }: ICardProps) => {
               }}
               
               />
+            </div>
           </div>
         </div>
       </div>

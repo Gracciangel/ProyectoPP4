@@ -1,19 +1,22 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Inputs } from "../Components/Atmos/inputs/Inputs";
-import type { IRegisterUser
- } from "../Interfaces/user/IUser";
+import type { IRegisterUser } from "../Interfaces/user/IUser";
 import { ButtonCustom } from "../Components/Atmos/buttons/Button";
 import { authUser } from "../Helpers/user";
 import { FaUserAlt, FaUserPlus } from "react-icons/fa";
 import { TfiEmail } from "react-icons/tfi";
 import { PiPassword } from "react-icons/pi";
-import {
-  Alert,
-} from "@chakra-ui/react";
+import { Alert } from "@chakra-ui/react";
 
 export const Register = () => {
-  const [error, setError] = useState<{ err: boolean; msjErr: string }>();
-  const [registerOk, setRegisterOk] = useState<{ ok: boolean; msjOk: string }>();
+  
+  const formRef = useRef<HTMLFormElement>(null);
+  const [alertData, setAlertData] = useState<{
+    status: "success" | "error";
+    message: string;
+  } | null>(null);
+
+  // Estado para el formulario de registro
   const [registerValue, setRegisterValue] = useState<IRegisterUser>({
     name: "",
     email: "",
@@ -21,49 +24,32 @@ export const Register = () => {
     rol_id: 2,
   });
 
-  const handleRegister = async () => {
+ const handleRegister = async () => {
+    setAlertData(null);
     try {
-         
       const response = await authUser(true, undefined, registerValue);
       if (response.success) {
-          setError(undefined); 
-        
-        setRegisterOk({
-          ok: true,
-          msjOk:  Array.isArray(response.result)
-                      ? ((response.result[0] as { msj?: string })?.msj ?? 'hubo un error ')
-                      : ((response.result as { msj?: string })?.msj ?? 'hubo un error ')
-        });
-        setRegisterValue({
-         ...registerValue,
-          name: "",
-          email: "",
-          password: "",
-        })
+        const msg = Array.isArray(response.result)
+          ? ((response.result[0] as { msj?: string })?.msj ?? 'Registro exitoso')
+          : ((response.result as { msj?: string })?.msj ?? 'Registro exitoso');
+        setAlertData({ status: 'success', message: msg });
+        // Limpia inputs físicamente
+        formRef.current?.reset();
+        // Resetea estado interno
+        setRegisterValue({ name: "", email: "", password: "", rol_id: 2 });
       } else {
-          setRegisterOk(undefined); 
-        setError({
-          err: true,
-          msjErr: Array.isArray(response.result)
-                      ? ((response.result[0] as { error?: string })?.error ?? 'hubo un error ')
-                      : ((response.result as { error?: string })?.error ?? 'hubo un error ')
-                    });
-                   
-                    
+        const errMsg = Array.isArray(response.result)
+          ? ((response.result[0] as { error?: string })?.error ?? 'Error al registrar')
+          : ((response.result as { error?: string })?.error ?? 'Error al registrar');
+        setAlertData({ status: 'error', message: errMsg });
       }
-      
-      
     } catch (err) {
-      setError({
-        err: true,
-        msjErr: "Ocurrió un error inesperado.",
-      });
-      setRegisterOk(undefined);
+      setAlertData({ status: 'error', message: 'Ocurrió un error inesperado.' });
       console.error(err);
     }
   };
-  
-  
+console.log({alertData})
+
   return (
     <div className="Login">
       <h1>Regístrate</h1>
@@ -110,23 +96,11 @@ export const Register = () => {
           colorPalette: "green",
         }}
       />
-
-      {/* Mensaje de éxito */}
-     {registerOk?.ok && (
-        <Alert.Root status={'success'} mt={4}>
+      {alertData && (
+        <Alert.Root status={alertData.status} mt={4} borderRadius="md">
           <Alert.Indicator />
           <Alert.Content>
-            <Alert.Title>{registerOk.msjOk}</Alert.Title>
-          </Alert.Content>
-        </Alert.Root>
-      )}
-
-      {/* Mensaje de error */}
-      {error?.err && (
-        <Alert.Root status="error" mt={4}>
-          <Alert.Indicator />
-          <Alert.Content>
-            <Alert.Title>{error.msjErr}</Alert.Title>
+            <Alert.Title>{alertData.message}</Alert.Title>
           </Alert.Content>
         </Alert.Root>
       )}

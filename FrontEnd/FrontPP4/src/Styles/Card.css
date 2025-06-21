@@ -127,3 +127,8 @@ font-size: 20px;
     font-size: 15px;
   }
 }
+
+.buttonsCard{
+  display: flex;
+  gap: 8px;
+}

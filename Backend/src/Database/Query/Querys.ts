@@ -9,8 +9,16 @@ export const UsersSQL = {
 
   deleteUserByEmail: `DELETE FROM USERS WHERE email = ?;`,
 
+  getUserIdByMail: `SELECT id FROM USERS WHERE email = ?;`,
+
   sesionInit: `SELECT name, email, photoUrl, rol_id as rol FROM users ;`,
 
-  selectPwdToHash: `SELECT password FROM USERS WHERE email = ? ; ` 
+  selectPwdToHash: `SELECT password FROM USERS WHERE email = ? ; ` ,
+
+  saveFavorite: `INSERT INTO FV (emailUser, title, pathPhoto) VALUES (?, ?, ?);`, 
+
+  deleteFavorite: `DELETE FROM FV WHERE title = ? AND emailUser = ?;`,
+
+  getFavorites: `SELECT f.title, f.pathPhoto FROM FV f JOIN USERS u ON f.emailUser = u.email ? ;`, 
 };
 

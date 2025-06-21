@@ -17,5 +17,12 @@ CREATE TABLE IF NOT EXISTS types_roles (
             DESCRIPCION TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS FV (
+            ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            emailUser TEXT NOT NULL,
+            title TEXT NOT NULL,
+            pathPhoto TEXT NOT NULL,
+);
+
 INSERT INTO types_roles (DESCRIPCION) VALUES ('admin');
 INSERT INTO types_roles (DESCRIPCION) VALUES ('user') ;

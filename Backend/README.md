@@ -57,6 +57,17 @@ Este proyecto de Backend utiliza **Express** como framework de Node.js para gest
 2. npm install (para instalar todas las dependencias)
 3. npm run dev (para inicializar el servidor)
 
+## Rutas
+
+- routes.post('/initSesion', SesionInitController)
+- routes.post('/registerUser', CreteUserController) ;
+- routes.get('/books', GetBooksController) ;
+- routes.post('/favorites', SaveFavoritesByUser) ; 
+- routes.post('/get/myfavorites', GetFavoritesByUser);
+- routes.delete('/delete/favorite', DeleteFavoriteItem)
+- routes.post('/updatePasword', updatePasswordController)
+- routes.get('/allUsers', getUsersController)
+
 ```bash
 git clone https://github.com/Gracciangel/ProyectoPP4
 

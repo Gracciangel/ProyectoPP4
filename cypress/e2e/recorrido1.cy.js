@@ -4,13 +4,13 @@ describe('Recorrido 1', () => {
     cy.get('ul').contains('Registrar').click();
     cy.location('pathname').should('equal', '/register');
 
-    cy.get('input').eq(0).type('Fernando');
-    cy.get('input').eq(1).type('fernando@gmail.com');
-    cy.get('input').eq(2).type('Fernando123');
+    cy.get('input').eq(0).type('Prueba');
+    cy.get('input').eq(1).type('Prueba@gmail.com');
+    cy.get('input').eq(2).type('Prueba123');
     cy.get('button').contains('Registrar').click();
     cy.get('.chakra-alert__title')
       .should('exist')
-      .contains('Ya existe un usuario con el email: fernando@gmail.com');
+      .contains('El usuario Prueba fue agregado exitosamente');
     
     cy.get('ul svg').click();
     cy.location('pathname').should('equal', '/login');
